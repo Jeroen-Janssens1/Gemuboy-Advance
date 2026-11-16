@@ -1,0 +1,66 @@
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_main.h>
+
+#include "Memory.h"
+#include "Renderer.h"
+#include "InputHandler.h"
+#include "Graphics.h"
+#include "CPU.h"
+#include "Audio.h"
+
+int main(int argc, char* argv[])
+{
+    // Init SDL
+    if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO))
+    {
+        SDL_Log("SDL_Init failed: %s", SDL_GetError());
+        return 1;
+    }
+    // initialize components
+    Memory* pMemory = new Memory();
+    Renderer* pRenderer = new Renderer();
+    InputHandler* pInputHandler = new InputHandler();
+	Graphics* pGraphics = new Graphics();
+    if (!pRenderer->InitializeRenderer())
+        return 1; // SDL failed init
+    Audio* pAudio = new Audio();
+    pAudio->Initialize();
+    // Give renderer access to graphics buffer
+    pRenderer->SetGraphics(pGraphics);
+    // init cpu with links to all different components of the emulator
+    CPU* pCPU = new CPU(pMemory, pGraphics, pInputHandler, pAudio);
+    // setup for Delta time
+    Uint64 lastTime = SDL_GetTicks();
+
+    // print out RAM dump to console for debugging memory initialization
+#ifdef _DEBUG
+    pMemory->PrintRAM(0, 0xFFF);
+#endif
+
+    // Main Loop
+    bool running = true;
+    while (running)
+    {
+        // Delta time
+        Uint64 now = SDL_GetTicks();
+        float  delta = (now - lastTime) / 1000.0f;  // seconds
+        lastTime = now;
+        // Input polling
+        running = pInputHandler->ProcessInput();
+        // Update CPU
+		pCPU->RunCycle();
+		// Update audio
+        pAudio->Update(delta);
+        // Render
+        pRenderer->Draw();
+    }
+    // Cleanup
+    delete pRenderer;
+    delete pCPU;
+    delete pAudio;
+    delete pMemory;
+    delete pInputHandler;
+    delete pGraphics;
+    SDL_Quit();
+    return 0;
+}
