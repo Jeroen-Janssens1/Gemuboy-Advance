@@ -1,26 +1,48 @@
 #pragma once
+
+#include <array>
+#include <cstdint>
+#include <vector>
+
+/*
+* The memory in the GBA is addressed differently depending on which memory region
+* you are accessing.
+*/
+
 class Memory final
 {
 public:
 	Memory();
-	unsigned char FetchData(unsigned short addr);
-	void WriteData(unsigned short addr, unsigned char value);
-	// Load a ROM file into memory at the program start address (0x200).
-	bool LoadROM(const char* filepath);
-	// Push a return address onto the stack. Returns true on success, false if stack is full.
-	bool PushStack(unsigned short addr);
-	// Pop a return address from the stack. Returns true on success, false if stack is empty.
-	bool PopStack(unsigned short &outAddr);
 
-	#ifdef _DEBUG
-	void PrintRAM(unsigned short startAddr, unsigned short endAddr); // debug function to print RAM memory to console window to check RAM state
-	#endif
+	uint8_t ReadByte(uint32_t address);
+	uint16_t ReadWord(uint32_t address);
+	uint32_t ReadDWord(uint32_t address);
+
+	void WriteByte(uint32_t address, uint8_t value);
+	void WriteWord(uint32_t address, uint16_t value);
+	void WriteDWord(uint32_t address, uint32_t value);
+
+	bool LoadROM(const char* filepath);
+
+	bool LoadBIOS(const char* filepath);
 
 private:
-	unsigned short m_FontMemOffset = 0x050;
-	unsigned char m_Memory[4096]; // our RAM memory
-	unsigned short m_Stack[16]; // we store the stack as an array of shorts because this will only hold memory addresses (16 bit values).
-	const unsigned char m_StackSize = 16; // the size of the stack (16 addresses)
-	unsigned short sp; // the stack pointer
+	// GIM (General Internal Memory)
+	std::array<uint8_t, 0x4000> m_BIOS{}; // 16KB of BIOS memory
+	std::array<uint8_t, 0x40000> m_EWRAM{}; // 256KB of EWRAM
+	std::array<uint8_t, 0x80000> m_IWRAM{}; // 32KB of IWRAM
+	std::array<uint8_t, 0x400> m_IORegisters{}; // 1KB of IO Registers
+
+	// IDM (Internal Display Memory)
+	std::array<uint8_t, 0x400> m_PaletteRAM{}; // 1KB of Palette RAM
+	std::array<uint8_t, 0x18000> m_VRAM{}; // 96KB of VRAM
+	std::array<uint8_t, 0x400> m_OAM{}; // 1KB of OAM (Object Attribute Memory)
+
+	// external / Game Pak memory
+	std::vector<uint8_t> m_ROM{}; // Game Pak ROM (up to 32MB x3)
+	std::vector<uint8_t> m_SRAM{}; // Game Pak SRAM (up to 64KB)
+
+	// address decoding
+	uint8_t* GetMemoryPointer(uint32_t address);
 };
 

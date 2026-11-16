@@ -32,11 +32,6 @@ int main(int argc, char* argv[])
     // setup for Delta time
     Uint64 lastTime = SDL_GetTicks();
 
-    // print out RAM dump to console for debugging memory initialization
-#ifdef _DEBUG
-    pMemory->PrintRAM(0, 0xFFF);
-#endif
-
     // Main Loop
     bool running = true;
     while (running)
