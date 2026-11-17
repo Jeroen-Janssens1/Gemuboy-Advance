@@ -27,9 +27,7 @@ namespace GBA
 
 	constexpr  uint32_t ROM_START_ADDRESS = 0x08000000;
 	constexpr uint32_t ROM_SIZE = 0x2000000;
-	constexpr uint32_t ROM_END_ADDRESS = 0x0E000000;
 
 	constexpr uint32_t SRAM_START_ADDRESS = 0x0E000000;
 	constexpr uint32_t SRAM_SIZE = 0x10000;
-	constexpr uint32_t SRAM_END_ADDRESS = 0x0E010000;
 }
