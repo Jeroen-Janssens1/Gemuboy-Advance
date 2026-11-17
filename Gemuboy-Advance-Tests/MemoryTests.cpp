@@ -6,41 +6,45 @@
 
 void TestEWRAM()
 {
-	Memory memory;
+	Memory* memory = new Memory();
 
-	memory.WriteByte(GBA::EWRAM_START_ADDRESS, 0x42);
+	memory->WriteByte(GBA::EWRAM_START_ADDRESS, 0x42);
 	
-	assert(memory.ReadByte(GBA::EWRAM_START_ADDRESS) == 0x42);
+	assert(memory->ReadByte(GBA::EWRAM_START_ADDRESS) == 0x42);
 	std::cout << "Basic Read/Write EWRAM test passed!\n";
+	delete memory;
 }
 
 void TestIWRAM()
 {
-	Memory memory;
-	memory.WriteByte(GBA::IWRAM_START_ADDRESS, 0xAB);
+	Memory* memory = new Memory();
+	memory->WriteByte(GBA::IWRAM_START_ADDRESS, 0xAB);
 
-	assert(memory.ReadByte(GBA::IWRAM_START_ADDRESS) == 0xAB);
+	assert(memory->ReadByte(GBA::IWRAM_START_ADDRESS) == 0xAB);
 	std::cout << "Basic Read/Write IWRAM test passed!\n";
+	delete memory;
 }
 
 void TestEWRAMMirroring()
 {
-	Memory memory;
-	memory.WriteByte(GBA::EWRAM_START_ADDRESS, 0x42);
+	Memory* memory = new Memory();
+	memory->WriteByte(GBA::EWRAM_START_ADDRESS, 0x42);
 	// EWRAM is mirrored every 256KB, so writing to the start should reflect in the mirrored address
-	assert(memory.ReadByte(GBA::EWRAM_START_ADDRESS + GBA::EWRAM_SIZE) == 0x42);
-	assert(memory.ReadByte(GBA::EWRAM_START_ADDRESS + 16 * GBA::EWRAM_SIZE) == 0x42);
+	assert(memory->ReadByte(GBA::EWRAM_START_ADDRESS + GBA::EWRAM_SIZE) == 0x42);
+	assert(memory->ReadByte(GBA::EWRAM_START_ADDRESS + 16 * GBA::EWRAM_SIZE) == 0x42);
 	std::cout << "EWRAM mirroring test passed!\n";
+	delete memory;
 }
 
 void TestIWRAMMirroring()
 {
-	Memory memory;
-	memory.WriteByte(GBA::IWRAM_START_ADDRESS, 0xAB);
+	Memory* memory = new Memory();
+	memory->WriteByte(GBA::IWRAM_START_ADDRESS, 0xAB);
 	// IWRAM is mirrored every 32KB, so writing to the start should reflect in the mirrored address
-	assert(memory.ReadByte(GBA::IWRAM_START_ADDRESS + GBA::IWRAM_SIZE) == 0xAB);
-	assert(memory.ReadByte(GBA::IWRAM_START_ADDRESS + 16 * GBA::IWRAM_SIZE) == 0xAB);
+	assert(memory->ReadByte(GBA::IWRAM_START_ADDRESS + GBA::IWRAM_SIZE) == 0xAB);
+	assert(memory->ReadByte(GBA::IWRAM_START_ADDRESS + 16 * GBA::IWRAM_SIZE) == 0xAB);
 	std::cout << "IWRAM mirroring test passed!\n";
+	delete memory;
 }
 
 void RunMemoryTests()
