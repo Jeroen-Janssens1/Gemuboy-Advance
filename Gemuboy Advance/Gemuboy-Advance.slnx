@@ -3,5 +3,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Project Path="../Gemuboy-Advance-Tests/Gemuboy-Advance-Tests.vcxproj" Id="ca9f1a73-cf0a-4439-ab4f-94a2ad053495" />
   <Project Path="Gemuboy-Advance.vcxproj" Id="f3ea8fed-06f6-4ed0-81cf-60f4a81093e2" />
 </Solution>

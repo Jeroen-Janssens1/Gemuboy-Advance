@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Audio.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CPU.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InputHandler.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Memory.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Audio.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CPU.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InputHandler.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Memory.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MemoryConstants.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer.h">
+      <Filter>header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{35e7275c-aaa2-4165-8ca6-dc1d4cf16049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header">
+      <UniqueIdentifier>{3f9d4590-5b8b-4ab3-b3c5-ca555e5a53f2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

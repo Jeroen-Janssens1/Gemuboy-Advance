@@ -33,6 +33,7 @@
     <ClInclude Include="src\Graphics.h" />
     <ClInclude Include="src\InputHandler.h" />
     <ClInclude Include="src\Memory.h" />
+    <ClInclude Include="src\MemoryConstants.h" />
     <ClInclude Include="src\Renderer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
