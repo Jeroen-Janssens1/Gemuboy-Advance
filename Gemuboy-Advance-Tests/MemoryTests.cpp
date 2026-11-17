@@ -47,13 +47,41 @@ void TestIWRAMMirroring()
 	delete memory;
 }
 
+void Test16BitReadWriteEWRAM()
+{
+	Memory* memory = new Memory();
+	memory->WriteWord(GBA::EWRAM_START_ADDRESS, 0x1234);
+	assert(memory->ReadWord(GBA::EWRAM_START_ADDRESS) == 0x1234);
+	// also ensure the ReadByte returns correct lower and upper values
+	assert(memory->ReadByte(GBA::EWRAM_START_ADDRESS) == 0x34);
+	assert(memory->ReadByte(GBA::EWRAM_START_ADDRESS + 1) == 0x12);
+	std::cout << "16-bit Read/Write test passed!\n";
+	delete memory;
+}
+
+void Test32BitReadWriteEWRAM()
+{
+	Memory* memory = new Memory();
+	memory->WriteDWord(GBA::EWRAM_START_ADDRESS, 0x12345678);
+	assert(memory->ReadDWord(GBA::EWRAM_START_ADDRESS) == 0x12345678);
+	// also ensure the ReadByte returns correct lower and upper values
+	assert(memory->ReadByte(GBA::EWRAM_START_ADDRESS) == 0x78);
+	assert(memory->ReadByte(GBA::EWRAM_START_ADDRESS + 1) == 0x56);
+	assert(memory->ReadByte(GBA::EWRAM_START_ADDRESS + 2) == 0x34);
+	assert(memory->ReadByte(GBA::EWRAM_START_ADDRESS + 3) == 0x12);
+	std::cout << "32-bit Read/Write test passed!\n";
+	delete memory;
+}
+
 void RunMemoryTests()
 {
 	TestOutput::WriteTestTitle("Memory Tests");
 	std::cout << "Running memory tests, please wait...\n\n";
 	TestEWRAM();
 	TestIWRAM();
+	Test16BitReadWriteEWRAM();
+	Test32BitReadWriteEWRAM();
 	TestEWRAMMirroring();
 	TestIWRAMMirroring();
-	std::cout << "All memory tests passed successfully!" << std::endl;
+	std::cout << "All memory tests passed successfully!\n\n";
 }

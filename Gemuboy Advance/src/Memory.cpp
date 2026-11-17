@@ -40,6 +40,26 @@ uint8_t Memory::ReadByte(uint32_t address)
 	}
 }
 
+uint16_t Memory::ReadWord(uint32_t address)
+{
+	uint16_t value = 0;
+	// little-endian: read the lower byte first, then the upper byte
+	value |= ReadByte(address);
+	value |= ReadByte(address + 1) << 8;
+	return value;
+}
+
+uint32_t Memory::ReadDWord(uint32_t address)
+{
+	uint32_t value = 0;
+	// little-endian: read the lower byte first, then the upper bytes
+	value |= ReadByte(address);
+	value |= ReadByte(address + 1) << 8;
+	value |= ReadByte(address + 2) << 16;
+	value |= ReadByte(address + 3) << 24;
+	return value;
+}
+
 void Memory::WriteByte(uint32_t address, uint8_t value)
 {
 	switch (address >> 24)
@@ -54,4 +74,20 @@ void Memory::WriteByte(uint32_t address, uint8_t value)
 	default:
 		break;
 	}
+}
+
+void Memory::WriteWord(uint32_t address, uint16_t value)
+{
+	// little-endian: write the lower byte first, then the upper byte
+	WriteByte(address, value & 0xFF);
+	WriteByte(address + 1, (value >> 8) & 0xFF);
+}
+
+void Memory::WriteDWord(uint32_t address, uint32_t value)
+{
+	// little-endian: write the lower byte first, then the upper bytes
+	WriteByte(address, value & 0xFF);
+	WriteByte(address + 1, (value >> 8) & 0xFF);
+	WriteByte(address + 2, (value >> 16) & 0xFF);
+	WriteByte(address + 3, (value >> 24) & 0xFF);
 }

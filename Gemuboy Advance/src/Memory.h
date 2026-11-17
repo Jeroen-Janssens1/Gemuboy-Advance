@@ -32,12 +32,12 @@ public:
 	Memory();
 
 	uint8_t ReadByte(uint32_t address);
-	//uint16_t ReadWord(uint32_t address);
-	//uint32_t ReadDWord(uint32_t address);
+	uint16_t ReadWord(uint32_t address);
+	uint32_t ReadDWord(uint32_t address);
 
 	void WriteByte(uint32_t address, uint8_t value);
-	//void WriteWord(uint32_t address, uint16_t value);
-	//void WriteDWord(uint32_t address, uint32_t value);
+	void WriteWord(uint32_t address, uint16_t value);
+	void WriteDWord(uint32_t address, uint32_t value);
 
 	//bool LoadROM(const char* filepath);
 
